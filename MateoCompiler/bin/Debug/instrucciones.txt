@@ -1,4 +1,2 @@
-IMPR
-imprimir()
-ABRI
-abrir(<talCosa>)
+WOFF
+wof(<var>)
