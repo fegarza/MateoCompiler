@@ -37,15 +37,17 @@
             this.lblMateo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.rtbSalida = new System.Windows.Forms.RichTextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).BeginInit();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // Compilar
             // 
-            this.Compilar.Location = new System.Drawing.Point(847, 205);
+            this.Compilar.Location = new System.Drawing.Point(12, 830);
             this.Compilar.Name = "Compilar";
-            this.Compilar.Size = new System.Drawing.Size(151, 39);
+            this.Compilar.Size = new System.Drawing.Size(704, 39);
             this.Compilar.TabIndex = 2;
             this.Compilar.Text = "Compilar";
             this.Compilar.UseVisualStyleBackColor = true;
@@ -60,22 +62,22 @@
             this.dgInstrucciones.AllowUserToResizeRows = false;
             this.dgInstrucciones.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgInstrucciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgInstrucciones.Location = new System.Drawing.Point(45, 613);
+            this.dgInstrucciones.Location = new System.Drawing.Point(751, 27);
             this.dgInstrucciones.Name = "dgInstrucciones";
             this.dgInstrucciones.RowHeadersWidth = 62;
             this.dgInstrucciones.RowTemplate.Height = 28;
-            this.dgInstrucciones.Size = new System.Drawing.Size(704, 242);
+            this.dgInstrucciones.Size = new System.Drawing.Size(817, 362);
             this.dgInstrucciones.TabIndex = 3;
             // 
             // GenerarDDL
             // 
             this.GenerarDDL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(184)))), ((int)(((byte)(130)))));
             this.GenerarDDL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GenerarDDL.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GenerarDDL.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GenerarDDL.ForeColor = System.Drawing.Color.White;
-            this.GenerarDDL.Location = new System.Drawing.Point(45, 141);
+            this.GenerarDDL.Location = new System.Drawing.Point(23, 27);
             this.GenerarDDL.Name = "GenerarDDL";
-            this.GenerarDDL.Size = new System.Drawing.Size(379, 73);
+            this.GenerarDDL.Size = new System.Drawing.Size(704, 73);
             this.GenerarDDL.TabIndex = 4;
             this.GenerarDDL.Text = "GENERAR TABLAS";
             this.GenerarDDL.UseVisualStyleBackColor = false;
@@ -84,26 +86,26 @@
             // rtbEntrada
             // 
             this.rtbEntrada.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbEntrada.Location = new System.Drawing.Point(803, 540);
+            this.rtbEntrada.Location = new System.Drawing.Point(12, 555);
             this.rtbEntrada.Name = "rtbEntrada";
-            this.rtbEntrada.Size = new System.Drawing.Size(704, 335);
+            this.rtbEntrada.Size = new System.Drawing.Size(704, 244);
             this.rtbEntrada.TabIndex = 0;
             this.rtbEntrada.Text = "";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(184)))), ((int)(((byte)(130)))));
-            this.panel1.Location = new System.Drawing.Point(820, 427);
+            this.panel1.Location = new System.Drawing.Point(962, 568);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(178, 107);
+            this.panel1.Size = new System.Drawing.Size(84, 62);
             this.panel1.TabIndex = 5;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(158)))), ((int)(((byte)(142)))));
-            this.panel2.Location = new System.Drawing.Point(1083, 366);
+            this.panel2.Location = new System.Drawing.Point(878, 568);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(410, 156);
+            this.panel2.Size = new System.Drawing.Size(65, 62);
             this.panel2.TabIndex = 6;
             // 
             // lblMateo
@@ -125,29 +127,41 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1580, 111);
+            this.panel3.Size = new System.Drawing.Size(1768, 111);
             this.panel3.TabIndex = 7;
             // 
             // rtbSalida
             // 
+            this.rtbSalida.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(158)))), ((int)(((byte)(142)))));
             this.rtbSalida.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbSalida.Location = new System.Drawing.Point(45, 239);
+            this.rtbSalida.ForeColor = System.Drawing.Color.White;
+            this.rtbSalida.Location = new System.Drawing.Point(23, 106);
             this.rtbSalida.Name = "rtbSalida";
-            this.rtbSalida.Size = new System.Drawing.Size(704, 335);
+            this.rtbSalida.Size = new System.Drawing.Size(704, 283);
             this.rtbSalida.TabIndex = 8;
             this.rtbSalida.Text = "";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.Controls.Add(this.rtbSalida);
+            this.panel4.Controls.Add(this.GenerarDDL);
+            this.panel4.Controls.Add(this.dgInstrucciones);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 111);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1768, 415);
+            this.panel4.TabIndex = 9;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1580, 912);
-            this.Controls.Add(this.rtbSalida);
+            this.ClientSize = new System.Drawing.Size(1768, 912);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.GenerarDDL);
-            this.Controls.Add(this.dgInstrucciones);
             this.Controls.Add(this.Compilar);
             this.Controls.Add(this.rtbEntrada);
             this.Name = "Form1";
@@ -155,6 +169,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -169,6 +184,7 @@
         private System.Windows.Forms.Label lblMateo;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RichTextBox rtbSalida;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 

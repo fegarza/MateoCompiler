@@ -23,6 +23,10 @@ namespace MateoCompiler
         string[] DatosDeConexion = System.IO.File.ReadAllLines(rutaConfig);
         public List<string> Alfabeto = new List<string>();
         #endregion
+        #region Codigo
+        public static string rutaConfig2 = @".\instrucciones.txt";
+        string[] CodigoLineas = System.IO.File.ReadAllLines(rutaConfig);
+        #endregion
 
         public string DDL = "";
         public string DML = "";
@@ -32,6 +36,7 @@ namespace MateoCompiler
             LeerInstrucciones();
 
         }
+
         public void LeerInstrucciones()
         {
             //Se define el datagridview
@@ -68,9 +73,9 @@ namespace MateoCompiler
                         if (i.contenido[x] == '>')
                         {
                             definicion = false;
-                            if (!Alfabeto.Contains(definicionStr))
+                            if (!Alfabeto.Contains(definicionStr.ToLower()))
                             {
-                                Alfabeto.Add(definicionStr);
+                                Alfabeto.Add(definicionStr.ToLower());
                             }
 
                             definicionStr = "";
@@ -84,9 +89,9 @@ namespace MateoCompiler
                     }
                     else
                     {
-                        if (!Alfabeto.Contains(i.contenido[x].ToString()))
+                        if (!Alfabeto.Contains(i.contenido[x].ToString().ToLower()))
                         {
-                            Alfabeto.Add(i.contenido[x].ToString());
+                            Alfabeto.Add(i.contenido[x].ToString().ToLower());
                         }
                     }
 
@@ -96,10 +101,9 @@ namespace MateoCompiler
         }
         public void CrearDDL()
         {
-            rtbSalida.Text += "-> CREANDO LA TABLA";
+            rtbSalida.Text += "// -> CREANDO LA TABLA \n";
             DDL = "CREATE TABLE Matriz( \n";
             DDL += "Estado INT, \n";
-
             foreach (string i in Alfabeto)
             {
                 DDL += $"[Z{i}] INT,\n";
@@ -120,7 +124,7 @@ namespace MateoCompiler
         }
         public void CrearDML()
         {
-            rtbSalida.Text += "// -> SE AGREGAN REGISTROS <- ";
+            rtbSalida.Text += "\n\n// -> SE AGREGAN REGISTROS <- \n\n ";
             SqlConnection con = new SqlConnection(cs);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
@@ -140,20 +144,20 @@ namespace MateoCompiler
                     foreach (string x in i.caracteres)
                     {
                         estado++;
-                        dmlc = "INSERT INTO Matriz ";
-                        dmlc += $"(Estado, [Z{x}])";
+                        dmlc = "INSERT INTO Matriz \n ";
+                        dmlc += $"(Estado, [Z{x}]) \n";
                         dmlc += "VALUES ";
-                        dmlc += $"({(estado - 1).ToString()}, {estado.ToString()})";
+                        dmlc += $"({(estado - 1).ToString()}, {estado.ToString()}) \n\n";
                         cmd.CommandText = dmlc;
                         rtbSalida.Text += dmlc;
                         cmd.ExecuteNonQuery();
                     }
                     //Insertamos el token
                     estado++;
-                    dmlc = "INSERT INTO Matriz ";
-                    dmlc += $"(estado, token)";
-                    dmlc += "VALUES ";
-                    dmlc += $"({(estado - 1).ToString()}, '{i.token}')";
+                    dmlc = "INSERT INTO Matriz \n";
+                    dmlc += $"(estado, token) \n";
+                    dmlc += "VALUES \n";
+                    dmlc += $"({(estado - 1).ToString()}, '{i.token}') \n\n";
 
                     cmd.CommandText = dmlc;
                     cmd.ExecuteNonQuery();
@@ -193,10 +197,10 @@ namespace MateoCompiler
                         {
                             estado++;
                             colision = false;
-                            query = "INSERT INTO Matriz ";
-                            query += $"(Estado, [Z{x}])";
-                            query += "VALUES ";
-                            query += $"({(estado - 1).ToString()}, {estado.ToString()})";
+                            query = "INSERT INTO Matriz \n";
+                            query += $"(Estado, [Z{x}]) \n";
+                            query += "VALUES \n";
+                            query += $"({(estado - 1).ToString()}, {estado.ToString()}) \n\n";
                             cmd.CommandText = query;
                             rtbSalida.Text += query;
                             cmd.ExecuteNonQuery();
@@ -204,11 +208,11 @@ namespace MateoCompiler
                     }
                     estado++;
                     string queryTkn = "";
-                    queryTkn = "INSERT INTO Matriz ";
-                    queryTkn += $"(estado, token)";
+                    queryTkn = "INSERT INTO Matriz \n ";
+                    queryTkn += $"(estado, token) \n";
                     queryTkn += "VALUES ";
-                    queryTkn += $"({(estado - 1).ToString()}, '{i.token}')";
-                    cmd.CommandText = queryTkn;
+                    queryTkn += $"({(estado - 1).ToString()}, '{i.token} \n\n')";
+                    cmd.CommandText = queryTkn; 
                     rtbSalida.Text += queryTkn;
                     cmd.ExecuteNonQuery();
                 }
@@ -224,7 +228,7 @@ namespace MateoCompiler
         private void Compilar_Click(object sender, EventArgs e)
         {
 
-            //Se separan las lineas del richtextbox
+            //Se separan las lineas del richtextbox y las instrucciones
             lineas.Clear();
             string linea = "";
             for (int x = 0; x < rtbEntrada.Text.Length; x++)
@@ -248,6 +252,13 @@ namespace MateoCompiler
                 }
             }
 
+            foreach(Linea l in lineas)
+            {
+                foreach(Instruccion i in l.instrucciones)
+                {
+
+                }
+            }
         }
         private string Descomponer()
         {

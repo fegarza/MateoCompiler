@@ -1,2 +1,28 @@
-WOFF
-wof(<var>)
+IN01
+Usar '<ARCH>'
+IN02
+Wof(<VARI>)
+IN22
+Wof(<CADE>)
+IN03
+Si(<BOOL>){<CADE>}
+IN04
+SiNo (<BOOL>){<CADE>}
+IN05
+Si SiNo (<BOOL>){<CADE>} 
+IN06
+Es(<BOOL>)({<CASO>}
+IN66
+Es(<BOOL>)({<CASO> <DEFE>})
+IN07
+Cada(<BOOL>,<BOOL>,<BOOL>){<CADE>} 
+IN08
+Mientras(<BOOL>){<CADE>}
+IN09
+Haz{<CADE>}
+IN10
+Haz{<CADE>} Mientras (<BOOL>)
+IN11
+LeerPatita(<VARI>)
+IN12
+LeerPatita(<CADE>)
