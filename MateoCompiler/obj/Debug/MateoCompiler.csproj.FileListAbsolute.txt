@@ -7,3 +7,12 @@ C:\Users\Felipe\source\repos\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler
 C:\Users\Felipe\source\repos\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.csproj.GenerateResource.cache
 C:\Users\Felipe\source\repos\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.exe
 C:\Users\Felipe\source\repos\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.pdb
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\bin\Debug\MateoCompiler.exe.config
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\bin\Debug\MateoCompiler.exe
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\bin\Debug\MateoCompiler.pdb
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.csprojAssemblyReference.cache
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.Form1.resources
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.Properties.Resources.resources
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.csproj.GenerateResource.cache
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.exe
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.pdb

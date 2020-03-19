@@ -13,7 +13,7 @@ namespace MateoCompiler
 {
     public partial class Form1 : Form
     {
-        string cs = @"Server=localhost;Database=mateo;User Id=pipe;Password=7271;";
+        string cs = @"Server= localhost; Database= mateo; Integrated Security=True;";
 
         private List<Linea> lineas = new List<Linea>();
 
@@ -24,8 +24,8 @@ namespace MateoCompiler
         public List<string> Alfabeto = new List<string>();
         #endregion
         #region Codigo
-        public static string rutaConfig2 = @".\instrucciones.txt";
-        string[] CodigoLineas = System.IO.File.ReadAllLines(rutaConfig);
+        public static string rutaConfig2 = @".\codigo.txt";
+        string[] CodigoLineas = System.IO.File.ReadAllLines(rutaConfig2);
         #endregion
 
         public string DDL = "";
@@ -34,7 +34,15 @@ namespace MateoCompiler
         {
             InitializeComponent();
             LeerInstrucciones();
+            CargarCodigo();
+        }
 
+        private void CargarCodigo()
+        {
+            foreach (string s in CodigoLineas)
+            {
+                rtbEntrada.AppendText(s);
+            }
         }
 
         public void LeerInstrucciones()
@@ -212,13 +220,13 @@ namespace MateoCompiler
                     queryTkn += $"(estado, token) \n";
                     queryTkn += "VALUES ";
                     queryTkn += $"({(estado - 1).ToString()}, '{i.token} \n\n')";
-                    cmd.CommandText = queryTkn; 
+                    cmd.CommandText = queryTkn;
                     rtbSalida.Text += queryTkn;
                     cmd.ExecuteNonQuery();
                 }
 
 
-                
+
 
 
 
@@ -252,13 +260,25 @@ namespace MateoCompiler
                 }
             }
 
-            foreach(Linea l in lineas)
+            //Transformacion a tokens
+            foreach (Linea l in lineas)
             {
-                foreach(Instruccion i in l.instrucciones)
+                foreach (Instruccion i in l.instrucciones)
                 {
-
+                    i.token = ObtenerToken(i.caracteres);
+                    if (i.token == null)
+                    {
+                        MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
+                    }
+                    else
+                    {
+                        rtbSalida.Text += (i.token + " ");
+                        MessageBox.Show(i.token);
+                    }
                 }
+                rtbSalida.Text +=(" \n");
             }
+
         }
         private string Descomponer()
         {
@@ -268,6 +288,92 @@ namespace MateoCompiler
         {
             CrearDDL();
             MessageBox.Show("Se ha creado con exito la matriz de transición en la base de datos");
+        }
+
+
+        public string ObtenerToken(List<string> _caracteres)
+        {
+            string result = null;
+
+            SqlConnection con = new SqlConnection(cs);
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            SqlDataReader rdr;
+
+            int estado = 0;
+            foreach (string x in _caracteres)
+            {
+                try
+                {
+                    cmd.CommandText = $"SELECT [Z{x}]  FROM Matriz WHERE [Z{x}] IS NOT NULL AND Estado = {estado.ToString()}";
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                             estado = int.Parse(rdr[0].ToString());
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                    rdr.Close();
+                    //Si es el ultimo elemento hace un paso extra para pasar el delimitador a directamente el estado del token
+                    //if(x == _caracteres.Last())
+                    //{
+                    //    cmd.CommandText = $"SELECT [Z ]  FROM Matriz WHERE [Z ] IS NOT NULL AND Estado = {estado.ToString()}";
+                    //    rdr = cmd.ExecuteReader();
+                    //    if (rdr.HasRows)
+                    //    {
+                    //        while (rdr.Read())
+                    //        {
+                    //            estado = int.Parse(rdr[0].ToString());
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        return null;
+                    //    }
+                    //    rdr.Close();
+                    //}
+                }
+                
+                catch  (Exception ex)
+                {
+                    return null;
+                }
+            }
+
+
+            //Al haber analizado todos los caracteres y tener exitosamente un estado final se busca el token en ese estado
+            cmd.CommandText = $"SELECT token FROM Matriz WHERE Estado = {estado.ToString()}";
+            rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                   string tkn = rdr["token"].ToString();
+                    if (String.IsNullOrEmpty(tkn))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return tkn;
+                    }
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+
+
+
+            return null;
         }
     }
 }

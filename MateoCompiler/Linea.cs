@@ -40,10 +40,6 @@ namespace MateoCompiler
                     instruccion += contenido[x].ToString();
                 }
             }
-            foreach(Instruccion x in instrucciones)
-            {
-                System.Windows.Forms.MessageBox.Show(x.contenido);
-            }
 
         }
     }
