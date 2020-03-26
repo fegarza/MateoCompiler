@@ -1,1 +1,14 @@
-Usar 'xd'
+Wof ( " Ingrese un número " ) ;
+var x = LeerPatita ( ) ;
+
+Wof ( " Ingrese un segundo número " ) ;
+var y = LeerPatita ( ) ;
+
+Si( x > y ) 
+{
+   Wof ( " El primer número es mayor " ) ;
+}
+Entonces
+{
+   Wof ( " El segundo número es mayor " ) ;
+}

@@ -67,7 +67,7 @@ ES13
 ES14
 } 
 ES15
-" 
+"  
 LOG1
 > 
 LOG2
@@ -75,7 +75,7 @@ LOG2
 LOG3
 < 
 LOG4
-<= 
+<=  
 LOG5
 == 
 IDEN
@@ -88,7 +88,3 @@ NUME
 <DIGI> 
 DECI
 <DIGI>.<DIGI> 
-LETR
-<LETR> 
-CARA
-<CARA>
