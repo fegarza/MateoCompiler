@@ -32,28 +32,56 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblMateo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pnSections = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dgSimbolos = new System.Windows.Forms.DataGridView();
+            this.Token = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
             this.rtTokens = new System.Windows.Forms.RichTextBox();
-            this.btnTransofmrar = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.rtbEntrada = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnTransofmrar = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.lblCantidadLineas = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgInstrucciones = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rtbSalida = new System.Windows.Forms.RichTextBox();
             this.GenerarDDL = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.panel6 = new System.Windows.Forms.Panel();
+            this.Tokens = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Instruccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.pnSections.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSimbolos)).BeginInit();
+            this.panel13.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel11.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).BeginInit();
             this.panel5.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -77,12 +105,12 @@
             // lblMateo
             // 
             this.lblMateo.AutoSize = true;
-            this.lblMateo.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMateo.Font = new System.Drawing.Font("Consolas", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMateo.ForeColor = System.Drawing.Color.White;
-            this.lblMateo.Location = new System.Drawing.Point(25, 22);
+            this.lblMateo.Location = new System.Drawing.Point(24, 20);
             this.lblMateo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMateo.Name = "lblMateo";
-            this.lblMateo.Size = new System.Drawing.Size(237, 26);
+            this.lblMateo.Size = new System.Drawing.Size(271, 34);
             this.lblMateo.TabIndex = 7;
             this.lblMateo.Text = "COMPILADOR MATEO";
             this.lblMateo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -90,23 +118,33 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.panel3.Controls.Add(this.panel7);
             this.panel3.Controls.Add(this.lblMateo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1179, 72);
+            this.panel3.Size = new System.Drawing.Size(1443, 86);
             this.panel3.TabIndex = 7;
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(184)))), ((int)(((byte)(131)))));
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(0, 71);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1443, 15);
+            this.panel7.TabIndex = 8;
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.Controls.Add(this.pnSections);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 72);
+            this.panel4.Location = new System.Drawing.Point(0, 86);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1179, 685);
+            this.panel4.Size = new System.Drawing.Size(1443, 615);
             this.panel4.TabIndex = 9;
             // 
             // pnSections
@@ -117,54 +155,147 @@
             this.pnSections.Controls.Add(this.tabPage2);
             this.pnSections.Controls.Add(this.tabPage3);
             this.pnSections.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnSections.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnSections.Location = new System.Drawing.Point(0, 0);
             this.pnSections.Name = "pnSections";
             this.pnSections.SelectedIndex = 0;
-            this.pnSections.Size = new System.Drawing.Size(1179, 685);
+            this.pnSections.Size = new System.Drawing.Size(1443, 615);
             this.pnSections.TabIndex = 9;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.panel6);
-            this.tabPage1.Controls.Add(this.btnTransofmrar);
-            this.tabPage1.Controls.Add(this.rtTokens);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.dgSimbolos);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.panel13);
+            this.tabPage1.Controls.Add(this.panel8);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1171, 659);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(15);
+            this.tabPage1.Size = new System.Drawing.Size(1435, 580);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Compilar";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // dgSimbolos
+            // 
+            this.dgSimbolos.AllowUserToAddRows = false;
+            this.dgSimbolos.AllowUserToDeleteRows = false;
+            this.dgSimbolos.AllowUserToOrderColumns = true;
+            this.dgSimbolos.AllowUserToResizeColumns = false;
+            this.dgSimbolos.AllowUserToResizeRows = false;
+            this.dgSimbolos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgSimbolos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgSimbolos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Token,
+            this.Valor});
+            this.dgSimbolos.Location = new System.Drawing.Point(14, 493);
+            this.dgSimbolos.Margin = new System.Windows.Forms.Padding(2);
+            this.dgSimbolos.Name = "dgSimbolos";
+            this.dgSimbolos.RowHeadersWidth = 62;
+            this.dgSimbolos.RowTemplate.Height = 28;
+            this.dgSimbolos.Size = new System.Drawing.Size(277, 218);
+            this.dgSimbolos.TabIndex = 23;
+            // 
+            // Token
+            // 
+            this.Token.HeaderText = "Token";
+            this.Token.Name = "Token";
+            this.Token.ReadOnly = true;
+            // 
+            // Valor
+            // 
+            this.Valor.HeaderText = "Valor";
+            this.Valor.Name = "Valor";
+            this.Valor.ReadOnly = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 469);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(180, 22);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Tabla de símbolos";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.rtTokens);
+            this.panel13.Controls.Add(this.label3);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel13.Location = new System.Drawing.Point(15, 285);
+            this.panel13.Name = "panel13";
+            this.panel13.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
+            this.panel13.Size = new System.Drawing.Size(1388, 164);
+            this.panel13.TabIndex = 20;
+            // 
             // rtTokens
             // 
-            this.rtTokens.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(158)))), ((int)(((byte)(142)))));
+            this.rtTokens.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.rtTokens.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtTokens.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.rtTokens.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtTokens.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTokens.ForeColor = System.Drawing.Color.White;
-            this.rtTokens.Location = new System.Drawing.Point(3, 517);
+            this.rtTokens.Location = new System.Drawing.Point(0, 47);
             this.rtTokens.Margin = new System.Windows.Forms.Padding(2);
             this.rtTokens.Name = "rtTokens";
-            this.rtTokens.Size = new System.Drawing.Size(1165, 139);
-            this.rtTokens.TabIndex = 12;
+            this.rtTokens.Size = new System.Drawing.Size(1388, 117);
+            this.rtTokens.TabIndex = 19;
             this.rtTokens.Text = "";
             // 
-            // btnTransofmrar
+            // label3
             // 
-            this.btnTransofmrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(184)))), ((int)(((byte)(130)))));
-            this.btnTransofmrar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnTransofmrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTransofmrar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTransofmrar.ForeColor = System.Drawing.Color.White;
-            this.btnTransofmrar.Location = new System.Drawing.Point(3, 470);
-            this.btnTransofmrar.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTransofmrar.Name = "btnTransofmrar";
-            this.btnTransofmrar.Size = new System.Drawing.Size(1165, 47);
-            this.btnTransofmrar.TabIndex = 11;
-            this.btnTransofmrar.Text = "TRANSFORMAR A TOKENS";
-            this.btnTransofmrar.UseVisualStyleBackColor = false;
-            this.btnTransofmrar.Click += new System.EventHandler(this.Compilar_Click);
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(0, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(170, 22);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Salida de tokens";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.panel12);
+            this.panel8.Controls.Add(this.panel10);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(15, 15);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(1388, 270);
+            this.panel8.TabIndex = 19;
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.panel9);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(0, 0);
+            this.panel12.Name = "panel12";
+            this.panel12.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
+            this.panel12.Size = new System.Drawing.Size(1076, 270);
+            this.panel12.TabIndex = 20;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.panel6);
+            this.panel9.Controls.Add(this.label2);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(0, 0);
+            this.panel9.Name = "panel9";
+            this.panel9.Padding = new System.Windows.Forms.Padding(0, 10, 10, 0);
+            this.panel9.Size = new System.Drawing.Size(1056, 270);
+            this.panel9.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.panel6.Controls.Add(this.rtbEntrada);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(0, 32);
+            this.panel6.Name = "panel6";
+            this.panel6.Padding = new System.Windows.Forms.Padding(50, 10, 20, 5);
+            this.panel6.Size = new System.Drawing.Size(1046, 238);
+            this.panel6.TabIndex = 13;
             // 
             // rtbEntrada
             // 
@@ -173,25 +304,112 @@
             this.rtbEntrada.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbEntrada.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbEntrada.ForeColor = System.Drawing.Color.White;
-            this.rtbEntrada.Location = new System.Drawing.Point(50, 20);
+            this.rtbEntrada.Location = new System.Drawing.Point(50, 10);
             this.rtbEntrada.Margin = new System.Windows.Forms.Padding(2);
             this.rtbEntrada.Name = "rtbEntrada";
-            this.rtbEntrada.Size = new System.Drawing.Size(1095, 427);
+            this.rtbEntrada.Size = new System.Drawing.Size(976, 223);
             this.rtbEntrada.TabIndex = 3;
             this.rtbEntrada.Text = "";
             this.rtbEntrada.TextChanged += new System.EventHandler(this.rtbEntrada_TextChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(0, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 22);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Código";
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.btnTransofmrar);
+            this.panel10.Controls.Add(this.pictureBox1);
+            this.panel10.Controls.Add(this.panel11);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel10.Location = new System.Drawing.Point(1076, 0);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(312, 270);
+            this.panel10.TabIndex = 1;
+            // 
+            // btnTransofmrar
+            // 
+            this.btnTransofmrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(184)))), ((int)(((byte)(130)))));
+            this.btnTransofmrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTransofmrar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnTransofmrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTransofmrar.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTransofmrar.ForeColor = System.Drawing.Color.White;
+            this.btnTransofmrar.Location = new System.Drawing.Point(0, 217);
+            this.btnTransofmrar.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTransofmrar.Name = "btnTransofmrar";
+            this.btnTransofmrar.Size = new System.Drawing.Size(312, 53);
+            this.btnTransofmrar.TabIndex = 16;
+            this.btnTransofmrar.Text = "OBTENER TOKENS";
+            this.btnTransofmrar.UseVisualStyleBackColor = false;
+            this.btnTransofmrar.Click += new System.EventHandler(this.GenerarTokens_click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.ErrorImage = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.Image = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.InitialImage = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.pictureBox1.Size = new System.Drawing.Size(312, 161);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.lblCantidadLineas);
+            this.panel11.Controls.Add(this.label1);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel11.Location = new System.Drawing.Point(0, 0);
+            this.panel11.Name = "panel11";
+            this.panel11.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.panel11.Size = new System.Drawing.Size(312, 31);
+            this.panel11.TabIndex = 0;
+            // 
+            // lblCantidadLineas
+            // 
+            this.lblCantidadLineas.AutoSize = true;
+            this.lblCantidadLineas.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCantidadLineas.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantidadLineas.Location = new System.Drawing.Point(210, 0);
+            this.lblCantidadLineas.Name = "lblCantidadLineas";
+            this.lblCantidadLineas.Size = new System.Drawing.Size(20, 22);
+            this.lblCantidadLineas.TabIndex = 18;
+            this.lblCantidadLineas.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(210, 22);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Cantidad de líneas: ";
+            // 
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.dgInstrucciones);
             this.tabPage2.Controls.Add(this.panel5);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 31);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1171, 495);
+            this.tabPage2.Size = new System.Drawing.Size(1435, 580);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Generar Matriz";
+            this.tabPage2.Text = "Lenguaje de programación";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dgInstrucciones
@@ -202,36 +420,48 @@
             this.dgInstrucciones.AllowUserToResizeColumns = false;
             this.dgInstrucciones.AllowUserToResizeRows = false;
             this.dgInstrucciones.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgInstrucciones.CausesValidation = false;
+            this.dgInstrucciones.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgInstrucciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgInstrucciones.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dgInstrucciones.Location = new System.Drawing.Point(3, 236);
+            this.dgInstrucciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Tokens,
+            this.Instruccion});
+            this.dgInstrucciones.Location = new System.Drawing.Point(26, 70);
             this.dgInstrucciones.Margin = new System.Windows.Forms.Padding(2);
             this.dgInstrucciones.Name = "dgInstrucciones";
+            this.dgInstrucciones.ReadOnly = true;
+            this.dgInstrucciones.RowHeadersVisible = false;
             this.dgInstrucciones.RowHeadersWidth = 62;
             this.dgInstrucciones.RowTemplate.Height = 28;
-            this.dgInstrucciones.Size = new System.Drawing.Size(1165, 235);
+            this.dgInstrucciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgInstrucciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgInstrucciones.ShowCellErrors = false;
+            this.dgInstrucciones.ShowCellToolTips = false;
+            this.dgInstrucciones.ShowEditingIcon = false;
+            this.dgInstrucciones.ShowRowErrors = false;
+            this.dgInstrucciones.Size = new System.Drawing.Size(505, 247);
             this.dgInstrucciones.TabIndex = 13;
+            this.dgInstrucciones.TabStop = false;
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.rtbSalida);
             this.panel5.Controls.Add(this.GenerarDDL);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(3, 3);
+            this.panel5.Location = new System.Drawing.Point(569, 70);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1165, 233);
+            this.panel5.Size = new System.Drawing.Size(498, 247);
             this.panel5.TabIndex = 12;
             // 
             // rtbSalida
             // 
             this.rtbSalida.BackColor = System.Drawing.Color.WhiteSmoke;
             this.rtbSalida.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbSalida.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rtbSalida.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbSalida.ForeColor = System.Drawing.Color.Black;
             this.rtbSalida.Location = new System.Drawing.Point(0, 47);
             this.rtbSalida.Margin = new System.Windows.Forms.Padding(2);
             this.rtbSalida.Name = "rtbSalida";
-            this.rtbSalida.Size = new System.Drawing.Size(1165, 184);
+            this.rtbSalida.Size = new System.Drawing.Size(498, 200);
             this.rtbSalida.TabIndex = 11;
             this.rtbSalida.Text = "";
             // 
@@ -245,7 +475,7 @@
             this.GenerarDDL.Location = new System.Drawing.Point(0, 0);
             this.GenerarDDL.Margin = new System.Windows.Forms.Padding(2);
             this.GenerarDDL.Name = "GenerarDDL";
-            this.GenerarDDL.Size = new System.Drawing.Size(1165, 47);
+            this.GenerarDDL.Size = new System.Drawing.Size(498, 47);
             this.GenerarDDL.TabIndex = 10;
             this.GenerarDDL.Text = "GENERAR TABLAS";
             this.GenerarDDL.UseVisualStyleBackColor = false;
@@ -255,45 +485,80 @@
             // 
             this.tabPage3.Controls.Add(this.panel1);
             this.tabPage3.Controls.Add(this.panel2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 31);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1171, 495);
+            this.tabPage3.Size = new System.Drawing.Size(1435, 580);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // panel6
+            // Tokens
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.panel6.Controls.Add(this.rtbEntrada);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Padding = new System.Windows.Forms.Padding(50, 20, 20, 20);
-            this.panel6.Size = new System.Drawing.Size(1165, 467);
-            this.panel6.TabIndex = 13;
+            this.Tokens.HeaderText = "Tokens";
+            this.Tokens.Name = "Tokens";
+            this.Tokens.ReadOnly = true;
+            // 
+            // Instruccion
+            // 
+            this.Instruccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Instruccion.HeaderText = "Instruccion";
+            this.Instruccion.Name = "Instruccion";
+            this.Instruccion.ReadOnly = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(22, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(400, 22);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Instrucciones existentes en mi lenguaje";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(565, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(390, 22);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Cargar instrucciones.txt al SQL Server";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1179, 757);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1443, 721);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
+            this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
             this.Text = "Form1";
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.pnSections.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSimbolos)).EndInit();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel12.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).EndInit();
             this.panel5.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -306,7 +571,6 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TabControl pnSections;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button btnTransofmrar;
         private System.Windows.Forms.RichTextBox rtbEntrada;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgInstrucciones;
@@ -314,8 +578,29 @@
         private System.Windows.Forms.RichTextBox rtbSalida;
         private System.Windows.Forms.Button GenerarDDL;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.RichTextBox rtTokens;
         private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Button btnTransofmrar;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblCantidadLineas;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.RichTextBox rtTokens;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dgSimbolos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Token;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tokens;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Instruccion;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 

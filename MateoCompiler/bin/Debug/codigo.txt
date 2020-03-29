@@ -1,14 +1,18 @@
-Wof ( " Ingrese un número " ) ;
-var x = LeerPatita ( ) ;
+Wof ( "Ingrese_un_número" ) ;
+var x = LeePatita ( ) ;
 
-Wof ( " Ingrese un segundo número " ) ;
-var y = LeerPatita ( ) ;
+Wof ( "Ingrese_un_segundo_número" ) ;
+var y = LeePatita ( ) ;
 
-Si( x > y ) 
+Si ( x > y ) 
 {
-   Wof ( " El primer número es mayor " ) ;
+   Wof ( "El_primer_número_es_mayor" ) ;
+}
+SiNo ( x == y )
+{
+   Wof ( "Ambos_son_iguales" );
 }
 Entonces
 {
-   Wof ( " El segundo número es mayor " ) ;
+   Wof ( "El_segundo_número_es_mayor" ) ;
 }

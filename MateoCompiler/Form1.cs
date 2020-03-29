@@ -27,19 +27,24 @@ namespace MateoCompiler
         public static string rutaConfig2 = @".\codigo.txt";
         string[] CodigoLineas = System.IO.File.ReadAllLines(rutaConfig2);
         #endregion
-
+        #region Instrucciones SQL
         public string DDL = "";
         public string DML = "";
-
-
+        #endregion
+        #region Contadores
+        private Dictionary<string, string> numeros = new Dictionary<string, string>();
+        private Dictionary<string, string> decimales = new Dictionary<string, string>();
+        private Dictionary<string, string> variables = new Dictionary<string, string>();
+        private Dictionary<string, string> cadenas = new Dictionary<string, string>();
+        #endregion
 
         #region Colores
-            private Color CDigitos = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(196)))), ((int)(((byte)(115)))));
-            private Color CComentarios = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(119)))), ((int)(((byte)(119)))));
-            private Color CIdentificadores = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(38)))), ((int)(((byte)(114)))));
-            private Color COperadores = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(196)))), ((int)(((byte)(115)))));
-            private Color CReservadas = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(219)))), ((int)(((byte)(202)))));
-            private Color CFuncion = System.Drawing.Color.FromArgb(((int)(((byte)(174)))), ((int)(((byte)(129)))), ((int)(((byte)(252)))));
+        private Color CDigitos = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(196)))), ((int)(((byte)(115)))));
+        private Color CComentarios = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(119)))), ((int)(((byte)(119)))));
+        private Color CIdentificadores = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(38)))), ((int)(((byte)(114)))));
+        private Color COperadores = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(196)))), ((int)(((byte)(115)))));
+        private Color CReservadas = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(219)))), ((int)(((byte)(202)))));
+        private Color CFuncion = System.Drawing.Color.FromArgb(((int)(((byte)(174)))), ((int)(((byte)(129)))), ((int)(((byte)(252)))));
         #endregion
 
 
@@ -48,22 +53,20 @@ namespace MateoCompiler
             InitializeComponent();
             LeerInstrucciones();
             CargarCodigo();
+
         }
 
         private void CargarCodigo()
         {
             foreach (string s in CodigoLineas)
             {
-                rtbEntrada.AppendText(s+"\n");
+                rtbEntrada.AppendText(s + "\n");
             }
+            lblCantidadLineas.Text = rtbEntrada.Lines.Count().ToString();
         }
 
         public void LeerInstrucciones()
         {
-            //Se define el datagridview
-            dgInstrucciones.ColumnCount = 2;
-            dgInstrucciones.Columns[0].Name = "Token";
-            dgInstrucciones.Columns[1].Name = "Instrucciones";
             //Se obtiene cada instruccion y se establece el alfabeto
             int cont = 1;
             string tempToken = "";
@@ -81,6 +84,7 @@ namespace MateoCompiler
                 }
                 cont++;
             }
+
             foreach (Instruccion i in instrucciones)
             {
                 dgInstrucciones.Rows.Add(i.token, i.contenido);
@@ -216,14 +220,10 @@ namespace MateoCompiler
                                 while (rdr.Read())
                                 {
                                     estadoBuscar = int.Parse(rdr[0].ToString());
-                                    if(x == "<DIGI>")
-                                    {
-                                        MessageBox.Show(estadoBuscar.ToString());
-                                    }
                                 }
-                               
+
                             }
-                           
+
                             rdr.Close();
                         }
                         //Si ya no tiene colision se crean los estado s
@@ -259,9 +259,12 @@ namespace MateoCompiler
             }
             con.Close();
         }
-        private void Compilar_Click(object sender, EventArgs e)
+        private void GenerarTokens_click(object sender, EventArgs e)
         {
-
+            numeros.Clear();
+            decimales.Clear();
+            cadenas.Clear();
+            rtTokens.Clear();
             //Se separan las lineas del richtextbox y las instrucciones
             lineas.Clear();
             string linea = "";
@@ -294,18 +297,193 @@ namespace MateoCompiler
                     i.token = ObtenerToken(i.caracteres);
                     if (i.token == null)
                     {
-                        MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
+                       // MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
                     }
                     else
                     {
-                        rtbSalida.Text += (i.token + " ");
-                        MessageBox.Show(i.token);
+
+                        rtTokens.Text += BuscarIncrementable(i.token.Substring(0, 4), i.contenido) + " ";
                     }
                 }
-                rtbSalida.Text +=(" \n");
+
+                if (!String.IsNullOrEmpty(l.contenido))
+                    rtTokens.Text += (" \n");
+            }
+
+            dgSimbolos.Rows.Clear();
+
+            foreach (KeyValuePair<string, string> n in numeros)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in decimales)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in cadenas)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in variables)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+
+
+
+
+        }
+
+        public string BuscarIncrementable(string _token, string _valor)
+        {
+            int digito = 0;
+            string newToken = _token;
+            try
+            {
+
+                switch (_token.Substring(0, 2))
+                {
+                    case "NU":
+
+                        if (numeros.Count == 0)
+                        {
+                            digito++;
+                            newToken = "NU" + "0" + digito.ToString();
+                            numeros.Add(_valor, newToken);
+                        }
+                        else
+                        {
+                            digito = int.Parse(numeros.Last().Value.Substring(2, 2));
+                            if (digito < 9)
+                            {
+                                digito++;
+                                newToken = "NU" + "0" + digito.ToString();
+                            }
+                            else
+                            {
+                                digito++;
+                                newToken = "NU" + digito.ToString();
+                            }
+                            if (!numeros.ContainsKey(_valor))
+                            {
+                                numeros.Add(_valor, newToken);
+                            }
+                            else
+                            {
+                                newToken = numeros[_valor];
+                            }
+                        }
+
+
+
+
+
+
+                        break;
+                    case "DE":
+                        if (decimales.Count == 0)
+                        {
+                            digito++;
+                            newToken = "DE" + "0" + digito.ToString();
+                            decimales.Add(_valor, newToken);
+                        }
+                        else
+                        {
+                            digito = int.Parse(decimales.Last().Value.Substring(2, 2));
+                            if (digito < 9)
+                            {
+                                digito++;
+                                newToken = "DE" + "0" + digito.ToString();
+                            }
+                            else
+                            {
+                                digito++;
+                                newToken = "DE" + digito.ToString();
+                            }
+                            if (!decimales.ContainsKey(_valor))
+                            {
+                                decimales.Add(_valor, newToken);
+                            }
+                            else
+                            {
+                                newToken = decimales[_valor];
+                            }
+                        }
+                        break;
+                    case "CA":
+                        if (cadenas.Count == 0)
+                        {
+                            digito++;
+                            newToken = "CA" + "0" + digito.ToString();
+                            cadenas.Add(_valor, newToken);
+                        }
+                        else
+                        {
+                            digito = int.Parse(cadenas.Last().Value.Substring(2, 2));
+                            if (digito < 9)
+                            {
+                                digito++;
+                                newToken = "CA" + "0" + digito.ToString();
+                            }
+                            else
+                            {
+                                digito++;
+                                newToken = "CA" + digito.ToString();
+                            }
+                            if (!cadenas.ContainsKey(_valor))
+                            {
+                                cadenas.Add(_valor, newToken);
+                            }
+                            else
+                            {
+                                newToken = cadenas[_valor];
+                            }
+                        }
+                        break;
+                    case "ID":
+                        if (variables.Count == 0)
+                        {
+                            digito++;
+                            newToken = "ID" + "0" + digito.ToString();
+                            variables.Add(_valor, newToken);
+                        }
+                        else
+                        {
+                            digito = int.Parse(variables.Last().Value.Substring(2, 2));
+                            if (digito < 9)
+                            {
+                                digito++;
+                                newToken = "ID" + "0" + digito.ToString();
+                            }
+                            else
+                            {
+                                digito++;
+                                newToken = "ID" + digito.ToString();
+                            }
+                            if (!variables.ContainsKey(_valor))
+                            {
+                                variables.Add(_valor, newToken);
+                            }
+                            else
+                            {
+                                newToken = variables[_valor];
+                            }
+                        }
+                        break;
+                    default:
+                        //   MessageBox.Show($"El token: {_valor} no tiene incrementable");
+                        break;
+                }
+                return newToken;
+            }
+            catch
+            {
+                return newToken;
             }
 
         }
+
+
         private string Descomponer()
         {
             return "";
@@ -316,21 +494,20 @@ namespace MateoCompiler
             MessageBox.Show("Se ha creado con exito la matriz de transición en la base de datos");
         }
 
-
-        public string ObtenerDefinicion(string x) 
+        public string ObtenerDefinicion(string x)
         {
             byte[] asciiBytes = Encoding.ASCII.GetBytes(x);
-            if(asciiBytes[0] >= 65 && asciiBytes[0] <= 122)
+            if (asciiBytes[0] >= 65 && asciiBytes[0] <= 122)
             {
                 return "<LETR>";
             }
-            else if(asciiBytes[0] >= 48 && asciiBytes[0] <= 57)
+            else if (asciiBytes[0] >= 48 && asciiBytes[0] <= 57)
             {
                 return "<DIGI>";
             }
             else
             {
-                return "<CARA>";
+                return "<LETR>";
             }
         }
 
@@ -342,7 +519,7 @@ namespace MateoCompiler
             con.Open();
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
-           
+
             int z = 0;
             int estado = 0;
             foreach (string x in _caracteres)
@@ -350,8 +527,8 @@ namespace MateoCompiler
                 z++;
                 try
                 {
-                    
- 
+
+
                     cmd.CommandText = $@"SELECT [Z{x}]  FROM Matriz WHERE [Z{x}] IS NOT NULL AND Estado = {estado.ToString()}";
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
@@ -387,18 +564,18 @@ namespace MateoCompiler
 
                                 rdr2.Close();
                             }
-                         
+
 
 
                         }
                     }
-                    
-                 
+
+
                     // Si es el ultimo elemento hace un paso extra para pasar el delimitador a directamente el estado del token
                     if (z == _caracteres.Count())
                     {
                         cmd.CommandText = $"SELECT [Z ]  FROM Matriz WHERE [Z ] IS NOT NULL AND Estado = {estado.ToString()}";
-                        using(SqlDataReader rdr = cmd.ExecuteReader())
+                        using (SqlDataReader rdr = cmd.ExecuteReader())
                         {
                             if (rdr.HasRows)
                             {
@@ -429,23 +606,23 @@ namespace MateoCompiler
                                         return null;
                                     }
                                 }
-                                  
-                              
+
+
 
                             }
                             rdr.Close();
                         }
-                        
-                       
-                       
+
+
+
                     }
-                    
+
                 }
-                catch  (Exception ex)
-                {   
+                catch (Exception ex)
+                {
                     string x2 = ObtenerDefinicion(x);
                     cmd.CommandText = $@"SELECT [Z{x2}]  FROM Matriz WHERE [Z{x2}] IS NOT NULL AND Estado = {estado.ToString()}";
-                    
+
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
                         if (rdr.HasRows)
@@ -462,8 +639,8 @@ namespace MateoCompiler
                             return null;
                         }
                     }
-                     
-                    
+
+
                     if (z == _caracteres.Count())
                     {
                         cmd.CommandText = $"SELECT [Z ]  FROM Matriz WHERE [Z ] IS NOT NULL AND Estado = {estado.ToString()}";
@@ -484,7 +661,7 @@ namespace MateoCompiler
                             }
                             rdr.Close();
                         }
-                            
+
 
                     }
                 }
@@ -515,10 +692,10 @@ namespace MateoCompiler
 
                     rdr.Close();
                 return null;
-                }
-            
-                
-           
+            }
+
+
+
 
 
 
@@ -530,6 +707,7 @@ namespace MateoCompiler
         {
             this.CheckKeyword("Si", CReservadas, 0);
             this.CheckKeyword("Entonces", CReservadas, 0);
+            this.CheckKeyword("SiNo", CReservadas, 0);
             this.CheckKeyword("var", CIdentificadores, 0);
             this.CheckKeyword("+", COperadores, 0);
             this.CheckKeyword("-", COperadores, 0);
@@ -544,6 +722,9 @@ namespace MateoCompiler
             this.CheckKeyword("<", COperadores, 0);
             this.CheckKeyword("Wof", CFuncion, 0);
             this.CheckKeyword("LeerPatita", CFuncion, 0);
+
+            lblCantidadLineas.Text = rtbEntrada.Lines.Count().ToString();
+
         }
         private void CheckKeyword(string word, Color color, int startIndex)
         {
@@ -560,6 +741,11 @@ namespace MateoCompiler
                     this.rtbEntrada.SelectionColor = Color.White;
                 }
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -9,6 +9,7 @@ namespace MateoCompiler
     public class Instruccion
     {
         public string contenido;
+       
         public string token;
         public List<string> caracteres = new List<string>();
         public Instruccion(string _contenido)
@@ -22,6 +23,7 @@ namespace MateoCompiler
             token = _token;
             ObtenerCaracteres();
         }
+         
         public Instruccion()
         { ObtenerCaracteres();  }
 
