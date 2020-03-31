@@ -32,12 +32,12 @@ namespace MateoCompiler
         public string DML = "";
         #endregion
         #region Contadores
+        public int Contador = 0;
         private Dictionary<string, string> numeros = new Dictionary<string, string>();
         private Dictionary<string, string> decimales = new Dictionary<string, string>();
         private Dictionary<string, string> variables = new Dictionary<string, string>();
         private Dictionary<string, string> cadenas = new Dictionary<string, string>();
         #endregion
-
         #region Colores
         private Color CDigitos = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(196)))), ((int)(((byte)(115)))));
         private Color CComentarios = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(119)))), ((int)(((byte)(119)))));
@@ -264,6 +264,7 @@ namespace MateoCompiler
             numeros.Clear();
             decimales.Clear();
             cadenas.Clear();
+            variables.Clear();
             rtTokens.Clear();
             //Se separan las lineas del richtextbox y las instrucciones
             lineas.Clear();
@@ -702,7 +703,7 @@ namespace MateoCompiler
 
             return null;
         }
-
+       
         private void rtbEntrada_TextChanged(object sender, EventArgs e)
         {
             this.CheckKeyword("Si", CReservadas, 0);
@@ -746,6 +747,296 @@ namespace MateoCompiler
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnPasos_Click(object sender, EventArgs e)
+        {
+            numeros.Clear();
+            decimales.Clear();
+            cadenas.Clear();
+            variables.Clear();
+            rtTokens.Clear();
+            //Se separan las lineas del richtextbox y las instrucciones
+            lineas.Clear();
+            string linea = "";
+            for (int x = 0; x < rtbEntrada.Text.Length; x++)
+            {
+
+                byte[] asciiBytes = Encoding.ASCII.GetBytes(rtbEntrada.Text[x].ToString());
+                if (asciiBytes[0] == 10)
+                {
+                    lineas.Add(new Linea(linea));
+                    linea = "";
+                }
+                else if (x == rtbEntrada.Text.Length - 1)
+                {
+                    linea += rtbEntrada.Text[x].ToString();
+                    lineas.Add(new Linea(linea));
+                    linea = "";
+                }
+                else
+                {
+                    linea += rtbEntrada.Text[x].ToString();
+                }
+            }
+
+            int v = 1;
+            //Transformacion a tokens
+            foreach (Linea l in lineas)
+            {
+                MessageBox.Show("Se empieza a leer la línea: #"+v.ToString(), "Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                v++;
+                foreach (Instruccion i in l.instrucciones)
+                {
+               
+                    i.token = ObtenerTokenPorPasos(i.caracteres);
+                    if (i.token == null)
+                    {
+                        // MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
+                    }
+                    else
+                    {
+                        string xd  = BuscarIncrementable(i.token.Substring(0, 4), i.contenido) + " ";
+                        rtTokens.Text += xd;
+                        MessageBox.Show($"Se ha encontrado un token para la palabra reservada: {i.contenido}, la cual es: {xd}");
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(l.contenido))
+                    rtTokens.Text += (" \n");
+            }
+            MessageBox.Show("Se han evaluado todas las lineas"  , "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            dgSimbolos.Rows.Clear();
+
+            foreach (KeyValuePair<string, string> n in numeros)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in decimales)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in cadenas)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+            foreach (KeyValuePair<string, string> n in variables)
+            {
+                dgSimbolos.Rows.Add(n.Key, n.Value);
+            }
+
+        }
+
+
+
+        public string ObtenerTokenPorPasos(List<string> _caracteres)
+        {
+            string result = null;
+
+            SqlConnection con = new SqlConnection(cs);
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+
+            int z = 0;
+            int estado = 0;
+            string palabraFormada = "";
+            foreach (string x in _caracteres)
+            {
+                palabraFormada = palabraFormada + x;
+                z++;
+                try
+                {
+
+
+                    cmd.CommandText = $@"SELECT [Z{x}]  FROM Matriz WHERE [Z{x}] IS NOT NULL AND Estado = {estado.ToString()}";
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+
+                        if (rdr.HasRows)
+                        {
+                            
+                            while (rdr.Read())
+                            {
+                               
+                                Detalle mi = new Detalle(x, estado.ToString(), rdr[0].ToString(), cmd.CommandText, palabraFormada);
+                                mi.ShowDialog();
+                                estado = int.Parse(rdr[0].ToString());
+                                
+                            }
+                            rdr.Close();
+                        }
+                        else
+                        {
+                            rdr.Close();
+                            //En el caso de que no exista, pues se busca por una definicion regular
+                            string x2 = ObtenerDefinicion(x);
+                           
+                            cmd.CommandText = $@"SELECT [Z{x2}]  FROM Matriz WHERE [Z{x2}] IS NOT NULL AND Estado = {estado.ToString()}";
+                            using (SqlDataReader rdr2 = cmd.ExecuteReader())
+                            {
+
+                                if (rdr2.HasRows)
+                                {
+                                    while (rdr2.Read())
+                                    {
+                                        Detalle mi = new Detalle(x2, estado.ToString(), rdr2[0].ToString(), cmd.CommandText, palabraFormada);
+                                        mi.ShowDialog();
+                                        estado = int.Parse(rdr2[0].ToString());
+                                    }
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+
+                                rdr2.Close();
+                            }
+
+
+
+                        }
+                    }
+
+
+                    // Si es el ultimo elemento hace un paso extra para pasar el delimitador a directamente el estado del token
+                    if (z == _caracteres.Count())
+                    {
+                        cmd.CommandText = $"SELECT [Z ]  FROM Matriz WHERE [Z ] IS NOT NULL AND Estado = {estado.ToString()}";
+                        using (SqlDataReader rdr = cmd.ExecuteReader())
+                        {
+                            if (rdr.HasRows)
+                            {
+                                while (rdr.Read())
+                                {
+                                    Detalle mi = new Detalle("DELIMITADOR", estado.ToString(), rdr[0].ToString(), cmd.CommandText, palabraFormada);
+                                    mi.ShowDialog();
+                                    estado = int.Parse(rdr[0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                //En el caso de que no exista, pues se busca por una definicion regular
+                                string x2 = ObtenerDefinicion(x);
+                                cmd.CommandText = $@"SELECT [Z{x2}]  FROM Matriz WHERE [Z{x2}] IS NOT NULL AND Estado = {estado.ToString()}";
+
+                                using (SqlDataReader rdr2 = cmd.ExecuteReader())
+                                {
+                                    if (rdr2.HasRows)
+                                    {
+                                        while (rdr2.Read())
+                                        {
+                                            Detalle mi = new Detalle(x2, estado.ToString(), rdr2[0].ToString(), cmd.CommandText, palabraFormada);
+                                            mi.ShowDialog();
+                                            estado = int.Parse(rdr2[0].ToString());
+                                        }
+                                        rdr2.Close();
+                                    }
+                                    else
+                                    {
+                                        rdr2.Close();
+                                        return null;
+                                    }
+                                }
+
+
+
+                            }
+                            rdr.Close();
+                        }
+
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    string x2 = ObtenerDefinicion(x);
+                    cmd.CommandText = $@"SELECT [Z{x2}]  FROM Matriz WHERE [Z{x2}] IS NOT NULL AND Estado = {estado.ToString()}";
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                Detalle mi = new Detalle(x2, estado.ToString(), rdr[0].ToString(), cmd.CommandText, palabraFormada);
+                                mi.ShowDialog();
+                                estado = int.Parse(rdr[0].ToString());
+                            }
+                            rdr.Close();
+                        }
+                        else
+                        {
+                            rdr.Close();
+                            return null;
+                        }
+                    }
+
+
+                    if (z == _caracteres.Count())
+                    {
+                        cmd.CommandText = $"SELECT [Z ]  FROM Matriz WHERE [Z ] IS NOT NULL AND Estado = {estado.ToString()}";
+                        using (SqlDataReader rdr = cmd.ExecuteReader())
+                        {
+                            if (rdr.HasRows)
+                            {
+                                while (rdr.Read())
+                                {
+                                    Detalle mi = new Detalle("DELIMITADOR", estado.ToString(), rdr[0].ToString(), cmd.CommandText, palabraFormada);
+                                    mi.ShowDialog();
+                                    estado = int.Parse(rdr[0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                rdr.Close();
+                                return null;
+
+                            }
+                            rdr.Close();
+                        }
+
+
+                    }
+                }
+            }
+
+
+            //Al haber analizado todos los caracteres y tener exitosamente un estado final se busca el token en ese estado
+            cmd.CommandText = $"SELECT token FROM Matriz WHERE Estado = {estado.ToString()}";
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        string tkn = rdr["token"].ToString();
+                        if (String.IsNullOrEmpty(tkn))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return tkn;
+                        }
+                    }
+                    rdr.Close();
+                }
+                else
+
+                    rdr.Close();
+                return null;
+            }
+
+
+
+
+
+
+
+            return null;
         }
     }
 }

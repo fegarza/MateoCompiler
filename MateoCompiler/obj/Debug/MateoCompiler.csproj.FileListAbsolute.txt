@@ -16,3 +16,4 @@ C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\Mat
 C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.csproj.GenerateResource.cache
 C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.exe
 C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.pdb
+C:\Users\fegar\Documents\tec\automatas\MateoCompiler\MateoCompiler\obj\Debug\MateoCompiler.Detalle.resources

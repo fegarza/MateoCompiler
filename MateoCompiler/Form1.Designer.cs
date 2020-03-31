@@ -51,20 +51,21 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.btnTransofmrar = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel11 = new System.Windows.Forms.Panel();
             this.lblCantidadLineas = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.dgInstrucciones = new System.Windows.Forms.DataGridView();
+            this.Tokens = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Instruccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rtbSalida = new System.Windows.Forms.RichTextBox();
             this.GenerarDDL = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.Tokens = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Instruccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnPasos = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.pnSections.SuspendLayout();
@@ -76,12 +77,12 @@
             this.panel9.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel11.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).BeginInit();
             this.panel5.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -189,7 +190,7 @@
             this.dgSimbolos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Token,
             this.Valor});
-            this.dgSimbolos.Location = new System.Drawing.Point(14, 493);
+            this.dgSimbolos.Location = new System.Drawing.Point(26, 664);
             this.dgSimbolos.Margin = new System.Windows.Forms.Padding(2);
             this.dgSimbolos.Name = "dgSimbolos";
             this.dgSimbolos.RowHeadersWidth = 62;
@@ -212,7 +213,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 469);
+            this.label4.Location = new System.Drawing.Point(27, 640);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(180, 22);
             this.label4.TabIndex = 22;
@@ -222,11 +223,10 @@
             // 
             this.panel13.Controls.Add(this.rtTokens);
             this.panel13.Controls.Add(this.label3);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel13.Location = new System.Drawing.Point(15, 285);
+            this.panel13.Location = new System.Drawing.Point(15, 313);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
-            this.panel13.Size = new System.Drawing.Size(1388, 164);
+            this.panel13.Size = new System.Drawing.Size(748, 279);
             this.panel13.TabIndex = 20;
             // 
             // rtTokens
@@ -239,7 +239,7 @@
             this.rtTokens.Location = new System.Drawing.Point(0, 47);
             this.rtTokens.Margin = new System.Windows.Forms.Padding(2);
             this.rtTokens.Name = "rtTokens";
-            this.rtTokens.Size = new System.Drawing.Size(1388, 117);
+            this.rtTokens.Size = new System.Drawing.Size(748, 232);
             this.rtTokens.TabIndex = 19;
             this.rtTokens.Text = "";
             // 
@@ -325,6 +325,7 @@
             // 
             // panel10
             // 
+            this.panel10.Controls.Add(this.btnPasos);
             this.panel10.Controls.Add(this.btnTransofmrar);
             this.panel10.Controls.Add(this.pictureBox1);
             this.panel10.Controls.Add(this.panel11);
@@ -350,19 +351,6 @@
             this.btnTransofmrar.Text = "OBTENER TOKENS";
             this.btnTransofmrar.UseVisualStyleBackColor = false;
             this.btnTransofmrar.Click += new System.EventHandler(this.GenerarTokens_click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.ErrorImage = global::MateoCompiler.Properties.Resources.mateo;
-            this.pictureBox1.Image = global::MateoCompiler.Properties.Resources.mateo;
-            this.pictureBox1.InitialImage = global::MateoCompiler.Properties.Resources.mateo;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 42);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.pictureBox1.Size = new System.Drawing.Size(312, 161);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
             // 
             // panel11
             // 
@@ -412,6 +400,24 @@
             this.tabPage2.Text = "Lenguaje de programación";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(565, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(390, 22);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Cargar instrucciones.txt al SQL Server";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(22, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(400, 22);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Instrucciones existentes en mi lenguaje";
+            // 
             // dgInstrucciones
             // 
             this.dgInstrucciones.AllowUserToAddRows = false;
@@ -442,6 +448,19 @@
             this.dgInstrucciones.Size = new System.Drawing.Size(505, 247);
             this.dgInstrucciones.TabIndex = 13;
             this.dgInstrucciones.TabStop = false;
+            // 
+            // Tokens
+            // 
+            this.Tokens.HeaderText = "Tokens";
+            this.Tokens.Name = "Tokens";
+            this.Tokens.ReadOnly = true;
+            // 
+            // Instruccion
+            // 
+            this.Instruccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Instruccion.HeaderText = "Instruccion";
+            this.Instruccion.Name = "Instruccion";
+            this.Instruccion.ReadOnly = true;
             // 
             // panel5
             // 
@@ -493,36 +512,35 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // Tokens
+            // btnPasos
             // 
-            this.Tokens.HeaderText = "Tokens";
-            this.Tokens.Name = "Tokens";
-            this.Tokens.ReadOnly = true;
+            this.btnPasos.BackColor = System.Drawing.Color.Maroon;
+            this.btnPasos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPasos.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnPasos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPasos.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPasos.ForeColor = System.Drawing.Color.White;
+            this.btnPasos.Location = new System.Drawing.Point(0, 164);
+            this.btnPasos.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPasos.Name = "btnPasos";
+            this.btnPasos.Size = new System.Drawing.Size(312, 53);
+            this.btnPasos.TabIndex = 17;
+            this.btnPasos.Text = "OBTENER TOKENS X PASOS";
+            this.btnPasos.UseVisualStyleBackColor = false;
+            this.btnPasos.Click += new System.EventHandler(this.btnPasos_Click);
             // 
-            // Instruccion
+            // pictureBox1
             // 
-            this.Instruccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Instruccion.HeaderText = "Instruccion";
-            this.Instruccion.Name = "Instruccion";
-            this.Instruccion.ReadOnly = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 37);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(400, 22);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Instrucciones existentes en mi lenguaje";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(565, 45);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(390, 22);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Cargar instrucciones.txt al SQL Server";
+            this.pictureBox1.ErrorImage = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.Image = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.InitialImage = global::MateoCompiler.Properties.Resources.mateo;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.pictureBox1.Size = new System.Drawing.Size(309, 119);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -551,7 +569,6 @@
             this.panel9.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -559,6 +576,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).EndInit();
             this.panel5.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -601,6 +619,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Instruccion;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnPasos;
     }
 }
 
