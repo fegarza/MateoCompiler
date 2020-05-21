@@ -27,6 +27,11 @@ namespace MateoCompiler
         public static string rutaConfig2 = @".\codigo.txt";
         string[] CodigoLineas = System.IO.File.ReadAllLines(rutaConfig2);
         #endregion
+        #region Producciones
+        private List<Definicion> definiciones = new List<Definicion>();
+        public static string rutaConfig3 = @".\producciones.txt";
+        string[] produccionesLineas = System.IO.File.ReadAllLines(rutaConfig3);
+        #endregion
         #region Instrucciones SQL
         public string DDL = "";
         public string DML = "";
@@ -51,6 +56,7 @@ namespace MateoCompiler
         public Form1()
         {
             InitializeComponent();
+            this.BusquedaDeProducciones();
             LeerInstrucciones();
             CargarCodigo();
 
@@ -64,7 +70,6 @@ namespace MateoCompiler
             }
             lblCantidadLineas.Text = rtbEntrada.Lines.Count().ToString();
         }
-
         public void LeerInstrucciones()
         {
             //Se obtiene cada instruccion y se establece el alfabeto
@@ -261,6 +266,7 @@ namespace MateoCompiler
         }
         private void GenerarTokens_click(object sender, EventArgs e)
         {
+            rtbxLogsProducciones.Clear();
             numeros.Clear();
             decimales.Clear();
             cadenas.Clear();
@@ -293,12 +299,38 @@ namespace MateoCompiler
             //Transformacion a tokens
             foreach (Linea l in lineas)
             {
+                int cont = -1;
                 foreach (Instruccion i in l.instrucciones)
                 {
+                    cont++;
                     i.token = ObtenerToken(i.caracteres);
                     if (i.token == null)
                     {
-                       // MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
+                        if (cont != 0)
+                        {
+                            if (l.instrucciones[cont - 1].contenido == "var")
+                            {
+                                i.token = "ID00";
+                                rtTokens.Text += BuscarIncrementable(i.token.Substring(0, 4), i.contenido) + " ";
+                            }
+                            else {
+                                if (variables.ContainsKey(i.contenido))
+                                {
+                                    i.token = "ID00";
+                                    rtTokens.Text += BuscarIncrementable(i.token.Substring(0, 4), i.contenido) + " ";
+                                }
+                                else if (i.caracteres.Count() > 0) {
+                                    if (i.contenido[0].ToString() == "\"")
+                                    {
+                                        i.token = "CA00";
+                                        rtTokens.Text += BuscarIncrementable(i.token.Substring(0, 4), i.contenido) + " ";
+                                    }
+                                }
+
+
+                            }
+                        }
+                        // MessageBox.Show($"Error en la palabra reservada {i.contenido}, no existe un camino en su matriz de transicion que de como resultado un token.");
                     }
                     else
                     {
@@ -330,11 +362,14 @@ namespace MateoCompiler
                 dgSimbolos.Rows.Add(n.Key, n.Value);
             }
 
+            rtbxDefiniciones.Clear();
+            foreach (Linea l in lineas) {
+                rtbxDefiniciones.Text += BuscarMinimaExpresion(l) + " \n";
+            }
 
 
 
         }
-
         public string BuscarIncrementable(string _token, string _valor)
         {
             int digito = 0;
@@ -483,18 +518,92 @@ namespace MateoCompiler
             }
 
         }
-
-
-        private string Descomponer()
+        private void BusquedaDeProducciones()
         {
-            return "";
+            
+            Definicion definicionActual = null;
+            int count = 0;
+            foreach (String linea  in produccionesLineas) {
+                count++;
+                if (count == produccionesLineas.Length) {
+                    if (linea.Substring(0, 2) == "->")
+                    {
+                        if (definicionActual != null)
+                        {
+                            definicionActual.AddProduccion(new Produccion(linea.Substring(3, (linea.Length - 3))));
+                        }
+                    }
+                    if(definicionActual != null)
+                    {
+                        definiciones.Add(definicionActual.GetAsObject());
+                      //  MessageBox.Show(definicionActual.ToString());
+                        definicionActual = null;
+                    }
+                }
+                else
+                {
+                    if (linea.Length > 3)
+                    {
+                        //Se trata de una definicion de una instruccion
+                        if (linea.Substring(0, 3) == "-->")
+                        {
+                            if (definicionActual == null)
+                            {
+                                definicionActual = new Definicion(linea.Substring(4, (linea.Length - 4)));
+                            }
+                            else
+                            {
+                                definiciones.Add(definicionActual.GetAsObject());
+                              //  MessageBox.Show(definicionActual.ToString());
+                                definicionActual = null;
+                                definicionActual = new Definicion(linea.Substring(4, (linea.Length - 4)));
+                            }
+                        }
+                        //Se trata de una produccion de la definicion
+                        else if (linea.Substring(0, 2) == "->")
+                        {
+                            if (definicionActual != null)
+                            {
+                                definicionActual.AddProduccion(new Produccion(linea.Substring(3, (linea.Length - 3))));
+                            }
+                        }
+                    }
+                }
+
+
+              
+            }
+
+
+
+
+            SqlConnection con = new SqlConnection(cs);
+                SqlCommand cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "DELETE FROM producciones;";
+            cmd.ExecuteNonQuery();
+                con.Close();
+           
+            foreach (Definicion d in definiciones) {
+
+                    con.Open();
+                    cmd.Connection = con;
+                    cmd.CommandText = d.getQuery();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                 
+            }
+           
+            
+            
+
         }
         private void GenerarDDL_Click(object sender, EventArgs e)
         {
             CrearDDL();
             MessageBox.Show("Se ha creado con exito la matriz de transición en la base de datos");
         }
-
         public string ObtenerDefinicion(string x)
         {
             byte[] asciiBytes = Encoding.ASCII.GetBytes(x);
@@ -511,7 +620,6 @@ namespace MateoCompiler
                 return "<LETR>";
             }
         }
-
         public string ObtenerToken(List<string> _caracteres)
         {
             string result = null;
@@ -703,7 +811,6 @@ namespace MateoCompiler
 
             return null;
         }
-       
         private void rtbEntrada_TextChanged(object sender, EventArgs e)
         {
             this.CheckKeyword("Si", CReservadas, 0);
@@ -743,12 +850,10 @@ namespace MateoCompiler
                 }
             }
         }
-
         private void label3_Click(object sender, EventArgs e)
         {
 
         }
-
         private void btnPasos_Click(object sender, EventArgs e)
         {
             numeros.Clear();
@@ -826,9 +931,6 @@ namespace MateoCompiler
             }
 
         }
-
-
-
         public string ObtenerTokenPorPasos(List<string> _caracteres)
         {
             string result = null;
@@ -1038,6 +1140,135 @@ namespace MateoCompiler
 
             return null;
         }
+        private void rtbxDefiniciones_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
+        private string BuscarMinimaExpresion(Linea linea)
+        {
+            if (!String.IsNullOrEmpty(linea.ToString()))
+            {
+                rtbxLogsProducciones.Text += $"┌──────> ANALIZA: {linea.ToString()} \n";
+            }
+            
+
+
+            bool iterar = true;
+            Linea actual = linea.Clone();
+            while (iterar)
+            {
+                linea = ReducirTokens(linea);
+                if(actual.Equals(linea))
+                {
+                    iterar = false;
+                }
+                else
+                {
+                    actual = linea.Clone();
+                }
+            }
+           
+
+            return actual.ToString();
+        }
+        private Linea ReducirTokens(Linea linea)
+        {
+            
+            bool encontrado = false;
+            int total = linea.instrucciones.Count();
+            int tomar = total;
+            int posibilidades = 1;
+
+            
+
+            while (!encontrado && posibilidades <= total )
+            {
+                //Buscar cada una de las posibilidades
+                for (int x = 1; x <= posibilidades; x++) 
+                {
+                    if (!encontrado) {
+                        string cadenaDeTokens = "";
+                        string contenido = "";
+                        int inicio = x - 1;
+                        int fin = tomar;
+                        List<Instruccion> temp = linea.instrucciones.GetRange(inicio, fin).ToList();
+                        foreach (Instruccion i in temp )
+                        {
+                            if(i.token != null)
+                                cadenaDeTokens += i.token.Substring(0,4) + " ";
+                            if (!String.IsNullOrEmpty(i.contenido))
+                                contenido += i.contenido + " ";
+                        }
+                        if(cadenaDeTokens.Count() > 0)
+                        {
+
+                           
+                            string query = $"SELECT TOP 1 titulo FROM Producciones WHERE contenido = '{cadenaDeTokens.Substring(0, cadenaDeTokens.Count() - 1)}'";
+                            SqlConnection con = new SqlConnection(cs);
+                            SqlCommand cmd = new SqlCommand(query);
+
+                            con.Open();
+                            cmd.Connection = con;
+                            cmd.CommandText = query;
+                            SqlDataReader rdr = cmd.ExecuteReader();
+                            if (rdr.HasRows)
+                            {
+                               
+
+                                List<Instruccion> primeros = new List<Instruccion>();
+                                List<Instruccion> ultimos = new List<Instruccion>();
+                                try
+                                {
+                                    primeros = linea.instrucciones.GetRange(0, x - 1);
+                                }
+                                catch { }
+                                try
+                                {
+                                    int k = linea.instrucciones.Count - ((x - 1)+ tomar) ;
+                                    int p = ((x - 1) + tomar);
+                                    ultimos = linea.instrucciones.GetRange(p, k);
+                                }
+                                catch { }
+
+                                Instruccion n = new Instruccion("xd","error");
+                                encontrado = true;
+                                while (rdr.Read()) 
+                                {
+                                    n = new Instruccion(rdr[0].ToString(), rdr[0].ToString());
+                                    rtbxLogsProducciones.Text += "│ \n";
+                                    rtbxLogsProducciones.Text += $"├──> Produccion encontrada: [{cadenaDeTokens.Substring(0, cadenaDeTokens.Count() - 1)}] \n";
+                                    rtbxLogsProducciones.Text += "│ \n";
+                                    rtbxLogsProducciones.Text += $"└─> Valor: {rdr[0].ToString()} \n";
+                                    rtbxLogsProducciones.Text += "\n";
+                                }
+                                    
+                                
+
+                                linea.instrucciones.Clear();
+                                linea.instrucciones.AddRange(primeros);
+                                linea.instrucciones.Add(n);
+                                linea.instrucciones.AddRange(ultimos);
+                            }
+                            con.Close();
+                        }
+                       
+                       
+                    }
+                   
+                }
+                tomar--;
+                posibilidades++;
+            }
+            
+
+
+
+            return linea;
+        }
+
+
     }
 }
 

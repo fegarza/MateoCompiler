@@ -1,18 +1,16 @@
 Wof ( "Ingrese_un_número" ) ;
-var x = LeePatita ( ) ;
-
-Wof ( "Ingrese_un_segundo_número" ) ;
-var y = LeePatita ( ) ;
-
-Si ( x > y ) 
-{
-   Wof ( "El_primer_número_es_mayor" ) ;
+var Numero = LeePatita ( ) ;
+ 
+Si ( Numero == 0 ) {
+  Wof ( "El factorial de" + Numero + "es: 1" ) ;
 }
-SiNo ( x == y )
-{
-   Wof ( "Ambos_son_iguales" );
-}
-Entonces
-{
-   Wof ( "El_segundo_número_es_mayor" ) ;
+SiNo {
+  var Fact = Numero;
+
+  Cada ( var int i = Numero - 1 ; i > 1 ; i = i - 1 ) {
+  	Fact = Fact * i ;
+  }
+
+  Wof ( "El factorial de " + Numero + "es: " + Fact ) ;
+
 }

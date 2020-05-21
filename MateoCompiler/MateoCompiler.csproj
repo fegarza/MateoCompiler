@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arbol.cs" />
+    <Compile Include="Definicion.cs" />
     <Compile Include="Detalle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +65,7 @@
     <Compile Include="Instruccion.cs" />
     <Compile Include="Linea.cs" />
     <Compile Include="Nodo.cs" />
+    <Compile Include="Produccion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Detalle.resx">
