@@ -1150,7 +1150,7 @@ namespace MateoCompiler
         {
             if (!String.IsNullOrEmpty(linea.ToString()))
             {
-                rtbxLogsProducciones.Text += $"┌──────> ANALIZA: {linea.ToString()} \n";
+                rtbxLogsProducciones.Text += $"┌──────> ANALIZA: [{linea.ToString()}] \n";
             }
             
 
@@ -1169,6 +1169,12 @@ namespace MateoCompiler
                     actual = linea.Clone();
                 }
             }
+            if (!String.IsNullOrEmpty(linea.ToString()))
+            {
+                rtbxLogsProducciones.Text += $"└>No hay más coinsidencias, termina el analisis. \n\n";
+            }
+              
+            
            
 
             return actual.ToString();
@@ -1240,8 +1246,8 @@ namespace MateoCompiler
                                     rtbxLogsProducciones.Text += "│ \n";
                                     rtbxLogsProducciones.Text += $"├──> Produccion encontrada: [{cadenaDeTokens.Substring(0, cadenaDeTokens.Count() - 1)}] \n";
                                     rtbxLogsProducciones.Text += "│ \n";
-                                    rtbxLogsProducciones.Text += $"└─> Valor: {rdr[0].ToString()} \n";
-                                    rtbxLogsProducciones.Text += "\n";
+                                    rtbxLogsProducciones.Text += $"├─> Valor: [{rdr[0].ToString()}] \n";
+                                    rtbxLogsProducciones.Text += "│ \n";
                                 }
                                     
                                 
@@ -1250,6 +1256,8 @@ namespace MateoCompiler
                                 linea.instrucciones.AddRange(primeros);
                                 linea.instrucciones.Add(n);
                                 linea.instrucciones.AddRange(ultimos);
+                                rtbxLogsProducciones.Text += $"├─> Analisis actual: [{linea.ToString()}] \n";
+                                rtbxLogsProducciones.Text += "│ \n";
                             }
                             con.Close();
                         }
@@ -1267,8 +1275,7 @@ namespace MateoCompiler
 
             return linea;
         }
-
-
+ 
     }
 }
 
