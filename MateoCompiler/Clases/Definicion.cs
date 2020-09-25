@@ -36,14 +36,13 @@ namespace MateoCompiler
             return ext;
         }
 
-        public string getQuery()
+        public string getQuery(string tabla)
         {
             string sql = "";
             foreach (Produccion x in producciones) { 
-                sql += $"INSERT INTO Producciones Values('{titulo}' , '{x.ToString()}'); \n";
+                sql += $"INSERT INTO {tabla} Values('{titulo}' , '{x.ToString()}'); \n";
             }
             return sql;
-           
         }
 
     }

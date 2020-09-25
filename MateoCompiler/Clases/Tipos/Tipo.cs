@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MateoCompiler.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MateoCompiler
+namespace MateoCompiler.Clases.Tipos
 {
-    class Arbol
+    class Tipo 
     {
-        public Nodo NodoInicial = null;
-
+        
     }
 }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MateoCompiler
+namespace MateoCompiler.Interfaces
 {
-    class Nodo
+    interface IInstruccion
     {
-        public Nodo Hermano;
-        public Nodo Hijo;
-        public int Estado;
+        string Token { get; set; }
+        string valor { get; set; }
+
     }
 }

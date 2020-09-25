@@ -1,13 +1,16 @@
 Wof ( "Ingrese_un_número" ) ;
 var Numero = 10 ;
+ 
 Si ( Numero == 0 ) {
   Wof ( "El factorial de" + Numero + "es: 1" ) ;
 }
 SiNo {
   var Fact = Numero ;
-  var i = Numero - 1 ;
-  Cada ( i ; i > 1 ; i = i - 1 ) {
+
+  Cada ( var i = Numero - 1 ; i > 1 ; i = i - 1 ) {
   	Fact = Fact * i ;
   }
+
   Wof ( "El factorial de " + Numero + "es: " + Fact ) ;
+
 }
