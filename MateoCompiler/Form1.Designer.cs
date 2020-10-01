@@ -97,6 +97,11 @@
             this.Instruccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.panel39 = new System.Windows.Forms.Panel();
+            this.panel40 = new System.Windows.Forms.Panel();
+            this.rtPostFijo = new System.Windows.Forms.RichTextBox();
+            this.panel41 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
             this.panel36.SuspendLayout();
             this.panel38.SuspendLayout();
@@ -137,12 +142,16 @@
             this.panel12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).BeginInit();
             this.panel13.SuspendLayout();
+            this.panel39.SuspendLayout();
+            this.panel40.SuspendLayout();
+            this.panel41.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel4
             // 
             this.panel4.AutoScroll = true;
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(228)))));
+            this.panel4.Controls.Add(this.panel39);
             this.panel4.Controls.Add(this.panel36);
             this.panel4.Controls.Add(this.panel33);
             this.panel4.Controls.Add(this.panel30);
@@ -965,6 +974,64 @@
             this.label6.Text = "INSTRUCCIONES DEL LENGUAJE";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
+            // panel39
+            // 
+            this.panel39.BackColor = System.Drawing.Color.White;
+            this.panel39.Controls.Add(this.panel40);
+            this.panel39.Controls.Add(this.panel41);
+            this.panel39.Location = new System.Drawing.Point(1425, 276);
+            this.panel39.Name = "panel39";
+            this.panel39.Size = new System.Drawing.Size(455, 225);
+            this.panel39.TabIndex = 32;
+            // 
+            // panel40
+            // 
+            this.panel40.Controls.Add(this.rtPostFijo);
+            this.panel40.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel40.Location = new System.Drawing.Point(0, 40);
+            this.panel40.Name = "panel40";
+            this.panel40.Padding = new System.Windows.Forms.Padding(10);
+            this.panel40.Size = new System.Drawing.Size(455, 185);
+            this.panel40.TabIndex = 17;
+            // 
+            // rtPostFijo
+            // 
+            this.rtPostFijo.BackColor = System.Drawing.Color.White;
+            this.rtPostFijo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtPostFijo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtPostFijo.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtPostFijo.ForeColor = System.Drawing.Color.DimGray;
+            this.rtPostFijo.Location = new System.Drawing.Point(10, 10);
+            this.rtPostFijo.Margin = new System.Windows.Forms.Padding(2);
+            this.rtPostFijo.Name = "rtPostFijo";
+            this.rtPostFijo.Size = new System.Drawing.Size(435, 165);
+            this.rtPostFijo.TabIndex = 20;
+            this.rtPostFijo.Text = "";
+            // 
+            // panel41
+            // 
+            this.panel41.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.panel41.Controls.Add(this.label13);
+            this.panel41.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel41.Location = new System.Drawing.Point(0, 0);
+            this.panel41.Name = "panel41";
+            this.panel41.Padding = new System.Windows.Forms.Padding(10);
+            this.panel41.Size = new System.Drawing.Size(455, 40);
+            this.panel41.TabIndex = 16;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label13.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(10, 10);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(143, 18);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "TEMPORAL TOKENS";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1027,6 +1094,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgInstrucciones)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
+            this.panel39.ResumeLayout(false);
+            this.panel40.ResumeLayout(false);
+            this.panel41.ResumeLayout(false);
+            this.panel41.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1100,6 +1171,11 @@
         private System.Windows.Forms.Panel panel37;
         private System.Windows.Forms.Panel panel38;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel39;
+        private System.Windows.Forms.Panel panel40;
+        private System.Windows.Forms.RichTextBox rtPostFijo;
+        private System.Windows.Forms.Panel panel41;
+        private System.Windows.Forms.Label label13;
     }
 }
 

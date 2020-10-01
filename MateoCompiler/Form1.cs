@@ -61,23 +61,32 @@ namespace MateoCompiler
             rtbExpresiones.Clear();
             rtbLogExpresiones.Clear();
 
+            rtPostFijo.Clear();
+
             Mateo.CodigoEntrada = new Clases.Codigo();
             Mateo.CodigoEntrada.Contenido = rtbEntrada.Text;
 
 
             foreach (Linea l in Mateo.CodigoEntrada.lineas)
             {
-
-               
+                rtPostFijo.Text += this.TransformarPostfijo(l);
                 foreach (Instruccion i in l.instrucciones)
                 {
                
                         rtTokens.Text += i.tokenIncrementable + " ";
-                       
-                  
+                        
+                   
+                        rtPostFijo.Text += "\n";
+
+
                 }
                 rtTokens.Text += "\n";
             }
+
+
+
+
+
 
             dgContadores.Rows.Clear();
 
@@ -98,11 +107,13 @@ namespace MateoCompiler
 
             int contadorParentesis = 0;
             int contadorLlave = 0;
+ 
+            int count = 0 ;
+ 
 
-            
             foreach (Linea l in Mateo.CodigoEntrada.lineasDeTipo)
             {
-                
+                count++;   
                 rtbExpresiones.Text += l.ToStringTipoDeDato() + "\n";
                 foreach(Instruccion i in l.instrucciones)
                 {
@@ -130,11 +141,12 @@ namespace MateoCompiler
             {
                 if(contadorParentesis < 0)
                 {
-                    MessageBox.Show("ERROR EN  PARENTESIS, FALTO POR ABRIR :" + contadorParentesis.ToString());
+                    contadorParentesis = contadorParentesis * -1;
+                    MessageBox.Show("ERROR HAN FALTADO POR ABRIR  PARENTESIS :" + contadorParentesis.ToString());
                 }
                 else
                 {
-                    MessageBox.Show("ERROR EN  PARENTESIS, FALTO POR CERRAR :" + contadorParentesis.ToString());
+                    MessageBox.Show("ERROR HAN FALTADO POR CERRAR  PARENTESIS :" + contadorParentesis.ToString());
                 }
                 
             }
@@ -142,11 +154,12 @@ namespace MateoCompiler
             {
                 if (contadorLlave < 0)
                 {
-                    MessageBox.Show("ERROR EN  LLAVE, FALTO POR ABRIR :" + contadorLlave.ToString());
+                    contadorLlave = contadorLlave * -1;
+                    MessageBox.Show("ERROR HAN FALTADO POR ABRIR LLAVES:" + contadorLlave.ToString());
                 }
                 else
                 {
-                    MessageBox.Show("ERROR EN  LLAVE, FALTO POR CERRAR :" + contadorLlave.ToString());
+                    MessageBox.Show("ERROR HAN FALTADO POR CERRAR LLAVES:" + contadorLlave.ToString());
                 }
                  
             }
@@ -158,12 +171,17 @@ namespace MateoCompiler
             foreach (Linea l in Mateo.CodigoEntrada.lineasDeSemanticaReducidas)
             {
                 rtbLogExpresiones.Text += l.logs;
+
+                if (l.ToString().Trim() != "S...")
+                {
+                    rtbSalidaProduccionesTipo.Text += "<ERROR>";
+                }
                 rtbSalidaProduccionesTipo.Text += l.ToString() + "\n";
             }
 
 
 
-                foreach (KeyValuePair<string, string> n in Mateo.CodigoEntrada.numeros)
+            foreach (KeyValuePair<string, string> n in Mateo.CodigoEntrada.numeros)
             {
                 dgContadores.Rows.Add(n.Value, "ENTE", n.Key);
             }
@@ -557,6 +575,159 @@ namespace MateoCompiler
         {
 
         }
+
+
+        #region 
+        public int DetectarPosicionUltimaParentesis(Linea linea)
+        {
+            int result = 0;
+            for (int x = 0; x < linea.instrucciones.Count; x++)
+            {
+                if (linea.instrucciones[x].tokenIncrementable.Trim() == "ES11")
+                {
+                    result = x;
+                }
+            }
+            return result;
+        }
+
+
+       
+
+
+         
+        public string TransformarPostfijo(Linea linea)
+        {
+            Stack<string> Operadores = new Stack<string>();
+            string postfijo = "";
+            Linea parametro = new Linea();
+            bool parametroActivo = false;
+
+            for (int x = 0; x < linea.instrucciones.Count; x++)
+            {
+                if (parametroActivo)
+                {
+                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == 4 && (DetectarPosicionUltimaParentesis(linea) == x))
+                    {
+                        postfijo += TransformarPostfijo(parametro);
+                        parametroActivo = false;
+                        parametro.instrucciones.Clear();
+                        while (Operadores.Count > 0)
+                        {
+                            postfijo += Operadores.Pop();
+                            postfijo += " ";
+                        }
+                    }
+                    else
+                    {
+                        parametro.instrucciones.Add( linea.instrucciones[x]);
+                    }
+                }
+                else
+                {
+                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) > 0)
+                    {
+                        if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == 5)
+                        {
+                            parametroActivo = true;
+                        }
+                        else
+                        {
+                            postfijo += " ";
+                            if (Operadores.Count == 0)
+                            {
+                                Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                            }
+                            else
+                            {
+
+                                if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) > AnalizarCaracter(Operadores.Peek()))
+                                {
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                }
+                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) < AnalizarCaracter(Operadores.Peek()))
+                                {
+                                    while (Operadores.Count > 0)
+                                    {
+                                        postfijo += Operadores.Pop();
+                                        postfijo += " ";
+                                    }
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                }
+                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == AnalizarCaracter(Operadores.Peek()))
+                                {
+                                    postfijo += Operadores.Pop();
+                                    postfijo += " ";
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                }
+                                else
+                                {
+
+                                }
+
+                            }
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        postfijo += $"{linea.instrucciones[x].tokenIncrementable.Trim()}";
+                    }
+                    if (x == linea.instrucciones.Count - 1)
+                    {
+                        while (Operadores.Count > 0)
+                        {
+                            postfijo += " ";
+
+                            postfijo += Operadores.Pop();
+
+                        }
+                    }
+                }
+            }
+            return postfijo;
+        }
+        
+
+
+
+        public bool DetectarParentesis(string x)
+        {
+            if (x == "ES10" || x == "ES11")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public int AnalizarCaracter(string x)
+        {
+            switch (x)
+            {
+                case "ES10":
+                    return 5;
+                case "ES11":
+                    return 4;
+                case "OP07":
+                    return 3;
+                case "OP06":
+                case "OP09":
+                    return 2;
+                case "OP04":
+                case "OP05":
+                    return 1;
+                default:
+                    return 0;
+            }
+        }
+        #endregion
+
+
+
     }
 }
 
