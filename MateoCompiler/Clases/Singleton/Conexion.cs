@@ -16,7 +16,7 @@ namespace MateoCompiler.Clases
     
         private Conexion()
         {
-            CadenaDeConexion = @"Server= localhost; Database= mateodb; Integrated Security=True;";
+            CadenaDeConexion = @"Server= localhost; Database= mat; Integrated Security=True;";
             SQLServerConexion = new SqlConnection(CadenaDeConexion);
         }
 
