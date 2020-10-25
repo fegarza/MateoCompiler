@@ -1,3 +1,7 @@
+BOOV
+Verdadero 
+BOOF
+Falso 
 IN01
 Usar 
 IN02
@@ -24,6 +28,14 @@ IN11
 HazMientras 
 IN12
 LeePatita 
+IN13
+AccionarPuerta
+IN14
+AccionarLuz
+IN15
+AccionarAgua
+IN16
+DarPremio
 OP01
 NOT 
 OP02

@@ -80,7 +80,6 @@ namespace MateoCompiler.Clases.Archivos
             {
                 dgView.Rows.Add(i.token, i.contenido);
             }
-
         }
 
         public void CargarSimbolos(DataGridView dgView)

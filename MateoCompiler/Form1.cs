@@ -69,14 +69,14 @@ namespace MateoCompiler
 
             foreach (Linea l in Mateo.CodigoEntrada.lineas)
             {
-                rtPostFijo.Text += this.TransformarPostfijo(l);
+                rtPostFijo.Text += this.TransformarPostfijo(l) + "\n";
                 foreach (Instruccion i in l.instrucciones)
                 {
                
                         rtTokens.Text += i.tokenIncrementable + " ";
                         
                    
-                        rtPostFijo.Text += "\n";
+                        //rtPostFijo.Text += "\n";
 
 
                 }
@@ -193,6 +193,10 @@ namespace MateoCompiler
             {
                 dgContadores.Rows.Add(n.Value, "CADE", n.Key);
             }
+            foreach (KeyValuePair<string, string> n in Mateo.CodigoEntrada.booleanos)
+            {
+                dgContadores.Rows.Add(n.Value, "BOOL", n.Key);
+            }
             foreach (KeyValuePair<string, Identificador> n in Mateo.CodigoEntrada.identificadores)
             {
 
@@ -214,6 +218,15 @@ namespace MateoCompiler
 
 
         }
+
+
+
+
+
+
+
+
+
 
         private void GenerarDDL_Click(object sender, EventArgs e)
         {
@@ -583,10 +596,13 @@ namespace MateoCompiler
             int result = 0;
             for (int x = 0; x < linea.instrucciones.Count; x++)
             {
-                if (linea.instrucciones[x].tokenIncrementable.Trim() == "ES11")
-                {
-                    result = x;
+                if (!String.IsNullOrEmpty(linea.instrucciones[x].tokenIncrementable)) {
+                    if (linea.instrucciones[x].tokenIncrementable.Trim() == "ES11")
+                    {
+                        result = x;
+                    }
                 }
+                
             }
             return result;
         }
@@ -607,7 +623,7 @@ namespace MateoCompiler
             {
                 if (parametroActivo)
                 {
-                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == 4 && (DetectarPosicionUltimaParentesis(linea) == x))
+                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable) == 4 && (DetectarPosicionUltimaParentesis(linea) == x))
                     {
                         postfijo += TransformarPostfijo(parametro);
                         parametroActivo = false;
@@ -625,9 +641,9 @@ namespace MateoCompiler
                 }
                 else
                 {
-                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) > 0)
+                    if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable) > 0)
                     {
-                        if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == 5)
+                        if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable) == 5)
                         {
                             parametroActivo = true;
                         }
@@ -636,29 +652,29 @@ namespace MateoCompiler
                             postfijo += " ";
                             if (Operadores.Count == 0)
                             {
-                                Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                Operadores.Push(linea.instrucciones[x].tokenIncrementable);
                             }
                             else
                             {
 
-                                if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) > AnalizarCaracter(Operadores.Peek()))
+                                if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable) > AnalizarCaracter(Operadores.Peek()))
                                 {
-                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable);
                                 }
-                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) < AnalizarCaracter(Operadores.Peek()))
+                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable) < AnalizarCaracter(Operadores.Peek()))
                                 {
                                     while (Operadores.Count > 0)
                                     {
                                         postfijo += Operadores.Pop();
                                         postfijo += " ";
                                     }
-                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable);
                                 }
-                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable.Trim()) == AnalizarCaracter(Operadores.Peek()))
+                                else if (AnalizarCaracter(linea.instrucciones[x].tokenIncrementable ) == AnalizarCaracter(Operadores.Peek()))
                                 {
                                     postfijo += Operadores.Pop();
                                     postfijo += " ";
-                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable.Trim());
+                                    Operadores.Push(linea.instrucciones[x].tokenIncrementable );
                                 }
                                 else
                                 {
@@ -673,16 +689,16 @@ namespace MateoCompiler
                     }
                     else
                     {
-                        postfijo += $"{linea.instrucciones[x].tokenIncrementable.Trim()}";
+                        postfijo += $"{linea.instrucciones[x].tokenIncrementable} ";
                     }
                     if (x == linea.instrucciones.Count - 1)
                     {
                         while (Operadores.Count > 0)
                         {
-                            postfijo += " ";
+                           
 
                             postfijo += Operadores.Pop();
-
+                            postfijo += " ";
                         }
                     }
                 }
@@ -719,6 +735,11 @@ namespace MateoCompiler
                     return 2;
                 case "OP04":
                 case "OP05":
+                case "LOG1":
+                case "LOG2":
+                case "LOG3":
+                case "LOG4":
+                case "LOG5":
                     return 1;
                 default:
                     return 0;

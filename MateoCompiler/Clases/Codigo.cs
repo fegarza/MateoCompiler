@@ -14,7 +14,8 @@ namespace MateoCompiler.Clases
         public Dictionary<string, string> decimales = new Dictionary<string, string>();
         public Dictionary<string, Identificador> identificadores = new Dictionary<string, Identificador>();
         public Dictionary<string, string> cadenas = new Dictionary<string, string>();
-        
+        public Dictionary<string, string> booleanos = new Dictionary<string, string>();
+
         public List<Linea> lineas = new List<Linea>();
         public List<Linea> lineasReducidas = new List<Linea>();
         public List<Linea> lineasDeTipo = new List<Linea>();
@@ -163,6 +164,36 @@ namespace MateoCompiler.Clases
                             }
                         }
                         break;
+                    case "BO":
+                        if (booleanos.Count == 0)
+                        {
+                            digito++;
+                            newToken = "BO" + "0" + digito.ToString();
+                            booleanos.Add(_valor, newToken);
+                        }
+                        else
+                        {
+                            digito = int.Parse(booleanos.Last().Value.Substring(2, 2));
+                            if (digito < 9)
+                            {
+                                digito++;
+                                newToken = "BO" + "0" + digito.ToString();
+                            }
+                            else
+                            {
+                                digito++;
+                                newToken = "BO" + digito.ToString();
+                            }
+                            if (!booleanos.ContainsKey(_valor))
+                            {
+                                booleanos.Add(_valor, newToken);
+                            }
+                            else
+                            {
+                                newToken = booleanos[_valor];
+                            }
+                        }
+                        break;
                     case "ID":
                         if (identificadores.Count == 0)
                         {
@@ -279,7 +310,7 @@ namespace MateoCompiler.Clases
                 //Si nos encontramos al final de la linea
                 else if (x == _strContenido.Length - 1)
                 {
-                    linea += _strContenido.ToString();
+                    //linea += _strContenido.ToString();
                     if (!String.IsNullOrEmpty(linea.Trim()))
                     {
                         lineas.Add(new Linea(linea));

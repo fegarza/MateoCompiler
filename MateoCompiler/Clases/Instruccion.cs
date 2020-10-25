@@ -89,7 +89,34 @@ namespace MateoCompiler
 
         public void CargarToken()
         {
-            this.token = generalFacade.ObtenerToken(this.caracteres);
+            if (this.contenido == "Verdadero")
+            {
+                this.token = "BOOV";
+            }
+            else if (this.contenido == "Falso")
+            {
+                this.token = "BOOF";
+            }
+            else if (this.contenido == "AccionarPuerta")
+            {
+                this.token = "IN13";
+            }
+            else if (this.contenido == "AccionarLuz")
+            {
+                this.token = "IN14";
+            }
+            else if (this.contenido == "AccionarAgua") {
+                this.token = "IN15";
+            }
+             else if (this.contenido == "DarPremio")
+            {
+                this.token = "IN16";
+            }
+            else
+            {
+                this.token = generalFacade.ObtenerToken(this.caracteres);
+            }
+            
         }
 
         public object Clone()
